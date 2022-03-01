@@ -1,10 +1,39 @@
 <script>
-	export let name;
+	import Modal from "./components/Modal.svelte";
+
+	let token = '', key = '', showModal = false;
+
+	const toggleModal = () => {
+		showModal = !showModal;
+		token = '';
+		key = '';
+	}
+
+	$: login = async () => {
+		await fetch(`https://cloud.softgreen.com.br/challenge/login_stage.jsp?token=${token}&key=${key}`)
+		.then(response => response.json())
+  		.then(data => {
+		console.log(data[0].status);
+		console.log(key)
+		console.log(token)
+  		}).catch(error => {
+    	console.log(error);
+  		});
+		toggleModal()
+		console.log(showModal)
+	}
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<Modal {showModal} on:click={toggleModal}/>
+	<form on:submit|preventDefault={login()}>
+		<!-- <label >Token</label> -->
+		<input bind:value={token} type="token" placeholder="token"/>
+		<!-- <label>Key</label> -->
+		<input bind:value={key} type="password" placeholder="Access key"/>
+
+		<button type="submit">Entrar</button>
+	</form>
 </main>
 
 <style>
