@@ -52,6 +52,7 @@
  	h1 {
 		text-shadow: 2px 2px 1px rgba(255, 252, 252, 0.651);
 		font-size: 4em;
+		text-align: center;
 		font-weight: 400;
 		margin-bottom: 0;
 		color: #252525;
